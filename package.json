@@ -1,0 +1,20 @@
+{
+  "name": "spotify-observer-spa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Single Page Application for the Spotify Observer project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bgever/spotify-observer-spa.git"
+  },
+  "author": "Bart Verkoeijen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bgever/spotify-observer-spa/issues"
+  },
+  "homepage": "https://github.com/bgever/spotify-observer-spa#readme"
+}
