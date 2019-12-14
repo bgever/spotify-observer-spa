@@ -3,18 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "description": "Single Page Application for the Spotify Observer project",
-  "main": "index.js",
   "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "preact": "^10.1.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.23.7",
+    "typescript": "^3.7.3"
+  },
+  "license": "MIT",
+  "author": "Bart Verkoeijen",
+  "homepage": "https://github.com/bgever/spotify-observer-spa#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bgever/spotify-observer-spa.git"
   },
-  "author": "Bart Verkoeijen",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/bgever/spotify-observer-spa/issues"
-  },
-  "homepage": "https://github.com/bgever/spotify-observer-spa#readme"
+  }
 }
