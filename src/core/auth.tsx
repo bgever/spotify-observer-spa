@@ -62,8 +62,16 @@ function useProvideAuth(): AuthModel {
     );
   }
 
+  /**
+   * Handle the callback for the implicit grant flow.
+   * @see https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow
+   */
   const callback = () => {
     const params = new URL('about:blank?' + window.location.hash.substr(1)).searchParams;
+    if (params.has('error')) {
+      console.error('Error logging in:', params.get('error'));
+      return false;
+    }
     const token = params.get('access_token');
     setToken(token);
     // Set the expiration with a 10s clock skew, to be ahead of the actual expiration in the SPA.
@@ -82,7 +90,7 @@ function useProvideAuth(): AuthModel {
       },
       error => console.error('Unable to fetch user data:', error),
     );
-    return true; // TODO: Handle error flow with `false` response.
+    return true;
   }
 
   const logout = () => {
