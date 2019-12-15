@@ -1,5 +1,9 @@
 import { h, createContext, PreactDOMAttributes } from 'preact';
 import { useContext, useState } from 'preact/hooks';
+import { route } from 'preact-router';
+import axios from 'axios';
+
+import { UserModel } from './user-model';
 
 const SPOTIFY_SCOPES = [
   'user-read-email',
@@ -10,14 +14,16 @@ const SPOTIFY_SCOPES = [
 interface AuthModel {
   isAuthenticated: boolean;
   isLoadingProfile: boolean;
+  user: UserModel | null;
   login?(): void;
-  callback?(): boolean;
   logout?(): void;
+  callback?(): boolean;
 }
 
 const authContext = createContext<AuthModel>({
   isAuthenticated: false,
-  isLoadingProfile: false
+  isLoadingProfile: false,
+  user: null
 });
 
 /**
@@ -40,9 +46,10 @@ export function useAuth() {
 function useProvideAuth(): AuthModel {
 
   const [isAuthenticated, setAuthenticated] = useState(false);
-  const [token, setToken] = useState<string>(null);
-  const [expiresAt, setExpiresAt] = useState<Date>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const [isLoadingProfile, setLoadingProfile] = useState(false);
+  const [user, setUser] = useState<UserModel | null>(null);
 
   const login = () => {
     window.location.assign(
@@ -57,19 +64,43 @@ function useProvideAuth(): AuthModel {
 
   const callback = () => {
     const params = new URL('about:blank?' + window.location.hash.substr(1)).searchParams;
-    setToken(params.get('access_token'));
-    setExpiresAt(new Date(Date.now() + (parseInt(params.get('expires_in'), 10) * 1000) - 10000)); // 10s clock skew.
+    const token = params.get('access_token');
+    setToken(token);
+    // Set the expiration with a 10s clock skew, to be ahead of the actual expiration in the SPA.
+    setExpiresAt(new Date(Date.now() + (parseInt(params.get('expires_in') || '0', 10) * 1000) - 10000));
     setAuthenticated(true);
     setLoadingProfile(true);
-    //load profile async
+    // Load profile information async.
+    axios('https://api.spotify.com/v1/me', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then(
+      response => {
+        setUser(response.data);
+        setLoadingProfile(false);
+      },
+      error => console.error('Unable to fetch user data:', error),
+    );
     return true; // TODO: Handle error flow with `false` response.
+  }
+
+  const logout = () => {
+    setAuthenticated(false);
+    setToken(null);
+    setExpiresAt(null);
+    setLoadingProfile(false);
+    setUser(null);
+    route('/welcome', true);
   }
 
   // Return the auth state and auth methods.
   return {
     isAuthenticated,
     isLoadingProfile,
+    user,
     login,
+    logout,
     callback
   };
 }

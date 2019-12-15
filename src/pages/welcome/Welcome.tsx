@@ -14,7 +14,7 @@ export function Welcome(props: RoutableProps) {
   return (
     <div>
       <h1>Welcome</h1>
-      <p><button onClick={() => auth.login()}>Log in</button></p>
+      <p><button onClick={() => auth.login!()}>Log in</button></p>
       <p><a href="/">Home</a></p>
     </div>
   );
