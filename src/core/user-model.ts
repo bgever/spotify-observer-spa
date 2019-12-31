@@ -12,19 +12,19 @@ export interface UserModel {
   explicit_content: {
     filter_enabled: boolean;
     filter_locked: boolean;
-  },
+  };
   external_urls:
   {
     /** E.g. `"https://open.spotify.com/user/wizzler"` */
     spotify: string;
-  },
+  };
   followers:
   {
     /** E.g. `null` */
     href: string;
     /** E.g. `3829` */
     total: number;
-  },
+  };
   /** E.g. `"https://api.spotify.com/v1/users/wizzler"` */
   href: string;
   /** E.g. `"wizzler"` */
@@ -34,7 +34,7 @@ export interface UserModel {
     width: number | null;
     /** E.g. `"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-frc3/t1.0-1/1970403_10152215092574354_1798272330_n.jpg"` */
     url: string;
-  }>,
+  }>;
   /** E.g. `"premium"` */
   product: string;
   /** E.g. `"user"` */
