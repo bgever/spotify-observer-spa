@@ -19,6 +19,8 @@ FROM base as dev
 # Expects the host context folder to be mounted at /app.
 
 EXPOSE 1234
+# HMR Port.
+EXPOSE 12345
 
 CMD ["npm", "start"]
 

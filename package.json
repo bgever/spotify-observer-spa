@@ -4,7 +4,7 @@
   "private": true,
   "description": "Single Page Application for the Spotify Observer project",
   "scripts": {
-    "start": "parcel src/index.html",
+    "start": "parcel src/index.html --hmr-port 12345",
     "build": "parcel build src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
