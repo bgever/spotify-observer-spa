@@ -4,7 +4,7 @@ import { useAuth } from './auth';
 
 export function handleRouteChange(e: RouterOnChangeArgs) {
   const auth = useAuth();
-  if (e.url === '/callback') {
+  if (new URL(e.url, 'http://localhost').pathname === '/callback') {
     route(auth.callback!() ? '/' : '/welcome', true);
     return;
   }

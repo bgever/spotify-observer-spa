@@ -4,6 +4,8 @@
 declare type ENV_VARS = {
   /** OAuth Client ID to connect with the Spotify API. */
   AUTH_CLIENT_ID: string;
+  /** Base URI of the API endpoints. */
+  API_BASE_URI: string;
 }
 
 /**
